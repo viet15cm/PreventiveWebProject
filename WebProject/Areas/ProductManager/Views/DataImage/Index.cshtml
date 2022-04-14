@@ -1,0 +1,59 @@
+﻿@model WebProject.Areas.ProductManager.Controllers.DataImageController.ModelIndex
+@{
+    ViewData["ActivePageProductManager"] = "DataImage";
+    ViewData["ActivePageTop"] = "ProductManager";
+    var statusmessage = TempData["StatusMessage"] as string;
+}
+
+<a asp-action="index" class="link-dark">Quản lý ảnh </a>
+
+<div class="mt-2">
+    <partial name="_AlertStatusMessage" model="@statusmessage" />
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-md-2 d-flex bd-highlight">
+        <div class="flex-grow-1 bd-highlight pb-3"><a class="link-dark" asp-action="CreateDataImage">+Thêm ảnh</a></div>
+    </div>
+    <div class="col-md-10">
+        <form class="d-flex flex-row-reverse" method="post" asp-action="FiterImage">
+            <div class="pe-2 bd-highlight"><input class="form-control" asp-for="@Model.Name" placeholder="VD: Iphone 6" /></div>
+            <div class="pe-2 bd-highlight">
+                <select class="form-select" asp-for="@Model.Color" asp-items="@Html.GetEnumSelectList<Color>()">
+                    <option value="">Màu</option>
+                </select>
+            </div>
+            <div class="pe-2 bd-highlight">
+                <select class="form-select" aria-label="Default select example" asp-for="@Model.LinesId"
+                        asp-items="@(new SelectList(@Model.Lines ,"Id","Name"))">
+                    <option value="">Dòng</option>
+                </select>
+            </div>
+            <div class="pe-2 bd-highlight"><button class="btn btn-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+        </form>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    @foreach (var item in Model.ImageDatas)
+    {
+        <div class="col-md-4 pb-4">
+            <div class="card pt-2" style="width:250px;">
+                <img src="~/FileImg/ProductImg/@item.UrlImg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text ">@item.Name / @EnumValue.GetValueColor(item.Color)</p>
+                    <a asp-action="ShowDataImage" asp-route-UrlImg="@item.UrlImg" class="text-info text-decoration-none"><i class="fa-solid fa-eye"></i> Xem &ensp;</a>
+                    <a asp-route-id="@item.Id" class="text-info text-decoration-none" asp-action="EditDataImage"><i class="fa-solid fa-pen-to-square"></i> Sửa &ensp;</a>
+                    <a asp-route-id="@item.Id" class="text-info text-decoration-none" asp-action="DeleteDataImage"><i class="fa-solid fa-trash-can"></i> Xóa</a>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+@section Scripts{
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+}

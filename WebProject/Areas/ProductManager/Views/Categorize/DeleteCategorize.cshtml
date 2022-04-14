@@ -1,0 +1,46 @@
+﻿@model Categorize
+@{
+    ViewData["ActivePageProductManager"] = "Commodity";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["Tittle"] = "Xóa loại mặt hàng";
+}
+<a asp-controller="Commodity" asp-action="index" class="link-dark">Quản lý phân loại mặt hàng</a>/
+<a asp-action="DeleteCategorize" asp-route-Id="@Model.Id" class="link-dark">@ViewData["tittle"]</a>/
+<a class="text-secondary">@Model.Name</a>
+<hr />
+@if (Model == null)
+{
+    <div class="alert alert-danger" >Không có dữ liệu !!!! <a class="link-danger" asp-controller="" asp-action="index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về ?</a></div>   
+}
+
+else
+{
+    <div class="card mb-4" style="width: 18rem;">
+        @*<img src="..." class="card-img-top" alt="...">*@
+        <div class="card-body">
+            <h5 class="card-title">@ViewData["Title"]</h5>
+            <p class="card-text">Xóa loại mặt hàng @Model.Name ra khỏi cơ sở dữ liệu ??</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Mã :  @Model.Code </li>
+            <li class="list-group-item">Tên : @Model.Name</li>
+        </ul>
+        <div class="card-body">
+            <form method="post" asp-action="DeleteCategorize">
+                @Html.HiddenFor(x => x.Id)
+                @Html.HiddenFor(x => x.Name)
+                @Html.HiddenFor(x => x.CommotityId)
+                @Html.HiddenFor(x => x.Code)
+                @Html.HiddenFor(x => x.CompanyId)
+                <button class="btn btn-danger" type="submit"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                <a class="btn btn-light" asp-action="index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </form>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

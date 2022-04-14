@@ -1,0 +1,41 @@
+﻿@model CommodityData
+@{
+    ViewData["ActivePageProductManager"] = "Commodity";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["tittle"] = "Chỉnh sữa mặt hàng";
+}
+
+
+<a asp-action="index" class="link-dark">Quản lý mặt hàng </a>/
+<a class="link-secondary">@ViewData["tittle"]</a>
+<hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="pb-4">
+            <form method="post" asp-action="EditCommodity">
+                @Html.HiddenFor(x => x.Id)
+                <div class="mb-3">
+                    <label class="form-label" asp-for="@Model.Code"></label>
+                    <input class="form-control" asp-for="@Model.Code" />
+                    <span asp-validation-for="@Model.Code"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="@Model.Name"></label>
+                    <input class="form-control" asp-for="@Model.Name" />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <hr />
+                <button class="btn btn-light" type="submit"><i class="fa-regular fa-circle-up"></i> Cập nhật</button>
+                <a class="btn btn-light" asp-action="Index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

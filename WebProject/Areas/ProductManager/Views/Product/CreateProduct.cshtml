@@ -1,0 +1,49 @@
+﻿@model ProductData
+@{
+    ViewData["ActivePageProductManager"] = "Product";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["tittle"] = "Thêm sản phẩm";
+
+}
+
+<a asp-action="index" class="link-dark">Quản lý sản phẩm </a>/
+<a asp-action="CreateProduct" class="link-secondary">@ViewData["tittle"]</a>
+<hr />
+<div class="row pb-4">
+    <div class="col-md-7">
+        <form method="post" asp-action="CreateProduct" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label class="form-label" asp-for="@Model.Code"></label>
+                <input class="form-control" asp-for="@Model.Code" placeholder="5 kí tự" autocomplete="on" />
+                <span asp-validation-for="@Model.Code"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="@Model.Name"></label>
+                <input class="form-control" asp-for="@Model.Name" placeholder="Tên sản phẩm" autocomplete="on" />
+                <span asp-validation-for="@Model.Name"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="@Model.Price"></label>
+                <input class="form-control" asp-for="@Model.Price" placeholder="0.00" autocomplete="on" />
+                <span asp-validation-for="@Model.Price"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" asp-for="@Model.LinesId"></label>
+                <select class="form-select" aria-label="Default select example" asp-for="@Model.LinesId"
+                        asp-items="@(new SelectList(@Model.lines,"Id","Name"))">
+                    <option value="">-- Chọn dòng --</option>
+                </select>
+                <span asp-validation-for="@Model.LinesId"></span>
+            </div>
+            <hr />
+            <button class="btn btn-secondary" type="submit"><i class="fa-regular fa-pen-to-square"></i> Thêm</button>
+            <a class="btn btn-secondary border-dark" asp-action="Index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+        </form>
+   </div>
+</div>
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+}

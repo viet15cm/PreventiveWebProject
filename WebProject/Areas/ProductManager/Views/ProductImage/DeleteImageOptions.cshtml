@@ -1,0 +1,54 @@
+﻿@model OptionImageDatas
+
+@{
+    ViewData["ActivePageProductManager"] = "Product";
+    ViewData["ActivePageTop"] = "ProductManager";
+    var statusmessage = TempData["StatusMessage"] as string;
+
+}
+
+<a asp-action="index" class="link-dark">Quản lý sản phẩm </a>/
+<a class="link-secondary">Thêm & xóa ảnh </a>/
+<a class="link-secondary">@Model.Name</a>
+<hr />
+
+<div class="">
+    
+    <a asp-all-route-data="@Context.GetQueryParameters().WithRoute("Id", Model.ProductId.ToString()).WithRoute("LinesId", Model.LinesId.ToString());"
+       class="btn btn-secondary"
+       asp-action="GetOptionImages" asp-controller="ProductImage">+ Thêm ảnh</a>
+    <button class="btn btn-secondary" type="submit" form="Options" >Xóa ảnh </button>
+</div>
+<hr />
+<div class="">
+    @if (Model.ImageDatas == null)
+    {
+        <div class="alert-primary">Không có dữ liệu !!!</div>
+    }
+    else
+    {
+        <form method="post" asp-action="DeleteImageOptions" id="Options">
+            <div class="row">
+                @Html.HiddenFor(i => i.ProductId)
+                @for (int i = 0; i < Model.ImageDatas.Length; i++)
+                {
+                    <div class="col-md-4 pb-4">
+                        <div class="card pt-2" style="width:250px;">
+                            <img src="~/FileImg/ProductImg/@Model.ImageDatas[i].UrlImg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text ">@Model.ImageDatas[i].Name / @EnumValue.GetValueColor(Model.ImageDatas[i].Color)</p>
+                                <input class="form-check-input" type="checkbox" asp-for="@Model.ImageDatas[i].Option" />
+                                <label asp-for="@Model.ImageDatas[i].Option">Xóa</label>
+                            </div>
+                            @Html.HiddenFor(x => x.ImageDatas[i].Option)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Id)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Name)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Color)
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </form>
+    }
+</div>

@@ -1,0 +1,48 @@
+﻿@model DataImage
+
+@{
+    ViewData["ActivePageProductManager"] = "DataImage";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["Tittle"] = "Xóa ảnh";
+    var statusmessage = TempData["StatusMessage"] as string;
+}
+
+<a asp-action="index" class="link-dark">Quản lý ảnh </a>/
+<a asp-action="DeleteDataImage" class="link-dark">@ViewData["Tittle"]</a>
+
+<hr />
+<div class="row pb-3">
+    <div class="col-md-6">
+        @if (Model != null)
+        {      
+               <div class="col-md-6">
+                    <div class="card pt-2" style="width:250px;">
+                        <img src="~/FileImg/ProductImg/@Model.UrlImg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-text">@Model.Name / @EnumValue.GetValueColor(Model.Color)</p>
+                            <form method="post" asp-action="DeleteDataImage">
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.HiddenFor(x => x.Name)
+                                @Html.HiddenFor(x => x.UrlImg)
+                                @Html.HiddenFor(x => x.Color)
+                                <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                <a class="btn btn-secondary" asp-action="index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+        }
+        else
+        {
+            <div class="alert alert-dark" role="alert">
+                Không có dữ liệu !! 
+                <a asp-action="Index" class="link-info">Quay lại</a>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        <partial name="_AlertStatusMessage" model="@statusmessage" />
+    </div>
+</div>
+

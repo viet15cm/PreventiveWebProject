@@ -1,0 +1,34 @@
+﻿@model ProductData
+
+@{
+    ViewData["ActivePageProductManager"] = "Product";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["tittle"] = "Xóa sản phẩm";
+}
+
+<a asp-action="index" class="link-dark">Quản lý sản phẩm </a>/
+<a class="text-secondary">@ViewData["tittle"]</a>
+<hr />
+<div class="alert alert-danger">
+    <i class="fa-solid fa-triangle-exclamation"></i> Bạn có muốn xóa sản phẩm <span class="text-danger" >@Model.Name</span> ??
+</div>
+<hr />
+<div class="pb-4">
+    <form method="post" asp-action="DeleteProduct">
+        @Html.HiddenFor(x => x.Id)
+        <div class="card" style="width: 350px;height: auto">
+            <img src="~/Img/delete.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">@Model.Name</h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Mã: @Model.Code</li>
+                <li class="list-group-item">Giá: @Model.Price VND</li>             
+            </ul>
+            <div class="card-body">
+                <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                <a asp-action="Index" class="btn btn-primary"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,45 @@
+﻿@model CategorizeData
+@{
+    ViewData["ActivePageProductManager"] = "Commodity";
+    ViewData["ActivePageTop"] = "ProductManager";
+    ViewData["tittle"] = "Thêm phân loại mặt hàng";
+}
+<a asp-action="index" class="link-dark">Quản lý phân loại mặt hàng </a>/
+<a asp-action="CreateCategorize" class="link-secondary">@ViewData["tittle"]</a>
+<hr />
+<div class="row">
+    <div class="col-md-7">
+        <div class="pb-4">
+            <form method="post" asp-action="CreateCategorize">
+                <div class="mb-3">
+                    <label class="form-label" asp-for="@Model.Code"></label>
+                    <input class="form-control" asp-for="@Model.Code" placeholder="X-X-X-X-X" autocomplete="off" />
+                    <span asp-validation-for="@Model.Code"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="@Model.Name"></label>
+                    <input class="form-control" asp-for="@Model.Name" placeholder="Iphone / Nokia" autocomplete="off" />
+                    <span asp-validation-for="@Model.Name"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="@Model.CommodityId"></label>
+                    <select class="form-select" aria-label="Default select example" asp-for="@Model.CommodityId"
+                            asp-items="@(new SelectList(@Model.Commodities,"Id","Name"))">
+                        <option value="">-- Chọn dòng --</option>
+                    </select>
+                    <span asp-validation-for="@Model.Lines"></span>
+                </div>
+                <div asp-validation-summary="ModelOnly"></div>
+                <hr />
+                <button class="btn btn-light" type="submit"><i class="fa-regular fa-pen-to-square"></i> Thêm</button>
+                <a class="btn btn-light" asp-action="Index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

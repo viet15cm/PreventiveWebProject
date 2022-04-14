@@ -1,0 +1,32 @@
+﻿<ul class="list-group" style="font-family: Monospace;">
+    <li class="list-group">
+        <a class="list-group-item list-group-item-action border-0" data-bs-toggle="collapse" href="#csharp" role="button" aria-expanded="false" aria-controls="csharp">
+            C#
+        </a>
+        <div class="collapse @ManagerDocsNavPages.CsharpNavClass(ViewContext)" id="csharp">
+            <ul class="list-group">
+                <li class="list-group ms-2">
+                    <a class="list-group-item list-group-item-action border-0 @ManagerDocsNavPages.CsharpBasicNavClass(ViewContext)" asp-area="Docs" asp-controller="Csharp" asp-action="index">C# cơ bản</a>
+                </li>
+                <li class="list-group ms-2">
+                    <a class="list-group-item list-group-item-action border-0 @ManagerDocsNavPages.CsharpAdvancedNavClass(ViewContext)" asp-area="Docs" asp-controller="Csharp" asp-action="CsharpAdvanced">C# nâng cao</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="list-group">
+        <a class="list-group-item list-group-item-action border-0" data-bs-toggle="collapse" href="#java" role="button" aria-expanded="false" aria-controls="java">
+            Java
+        </a>
+        <div class="collapse @ManagerDocsNavPages.JavaNavClass(ViewContext)" id="java">
+            <ul class="list-group">
+                <li class="list-group ms-2">
+                    <a class="list-group-item list-group-item-action border-0 @ManagerDocsNavPages.JavaBasicNavClass(ViewContext) " asp-area="Docs" asp-controller="Java" asp-action="index">Java cơ bản</a>
+                </li>
+                <li class="list-group ms-2">
+                    <a class="list-group-item list-group-item-action border-0 @ManagerDocsNavPages.JavaAdvancedNavClass(ViewContext) " asp-area="Docs" asp-controller="java" asp-action="JavaAdvanced">Java nâng cao</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>

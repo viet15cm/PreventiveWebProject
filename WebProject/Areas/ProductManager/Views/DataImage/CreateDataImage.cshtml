@@ -1,0 +1,147 @@
+﻿@model ImageData
+@{
+    ViewData["ActivePageProductManager"] = "DataImage";
+    ViewData["ActivePageTop"] = "ProductManager";
+    var statusmessage = TempData["StatusMessage"] as string;
+    ViewData["tittle"] = "Thêm ảnh";
+}
+
+<a asp-action="index" class="link-dark">Quản lý ảnh</a>/
+<a asp-action="CreateDataImage" class="link-secondary">@ViewData["tittle"]</a>
+<hr />
+<div class="row">
+    <div class="col-md-7">
+        <form method="post" asp-action="CreateDataImage" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="@Model.Name"></label>
+                        <input class="form-control" asp-for="@Model.Name" placeholder="" autocomplete="on" />
+                        <span asp-validation-for="@Model.Name"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="@Model.Color"></label>
+                        <select class="form-select" asp-for="@Model.Color" asp-items="@Html.GetEnumSelectList<Color>()">
+                            <option value="">-- Chọn màu --</option>
+                        </select>
+                        <span asp-validation-for="@Model.Color" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" asp-for="@Model.LinesId"></label>
+                        <select class="form-select" aria-label="Default select example" asp-for="@Model.LinesId"
+                                asp-items="@(new SelectList(@Model.Lines,"Id","Name"))">
+                            <option value="">-- Chọn dòng --</option>
+                        </select>
+                        <span asp-validation-for="@Model.Lines"></span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="mb-3">
+                        <label asp-for="@Model.FormFile = Model.FormFile"></label>
+                        @if (Model.UrlImg == null)
+                        {
+                            <img class="form-control" id="indexImg" src="~/Img/Default.png" style="width : 250px; height : auto" />
+
+                        }
+                        else
+                        {
+                            <img class="form-control" id="indexImg" src="~/FileImg/ProductImg/@Model.UrlImg" style="width : 250px; height : auto" />
+
+                        }
+                        <div class="file-field">
+                            <div class="btn btn-light btn-sm float-left">
+                                <input class="form-control-file" asp-for="@Model.FormFile" onchange="ShowImagePreview(this,indexImg )" />
+                            </div>
+                        </div>
+
+                        <hr />
+                        <button class="btn btn-secondary" type="submit"><i class="fa-regular fa-pen-to-square"></i> Thêm</button>
+                        <a class="btn btn-secondary" asp-action="Index"><i class="fa-solid fa-arrow-rotate-left"></i> Quay về</a>
+                    </div>
+                    <div asp-validation-summary="ModelOnly"></div>
+                </div>
+                   
+            </div> 
+            
+            
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script>
+
+        const dts = new DataTransfer();
+        var dt = null;
+        debugger
+
+        function ShowImagePreview(imgUpLoader, previewImg) {
+            if (imgUpLoader.files && imgUpLoader.files[0]) {
+                dt = new DataTransfer();
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $(previewImg).attr('src', e.target.result)
+                    var f = e.target.result;
+                    debugger;
+                }
+
+                reader.readAsDataURL(imgUpLoader.files[0]);
+                debugger
+                dt.items.add(imgUpLoader.files[0]);
+
+                debugger
+            }
+            imgUpLoader.files = dt.files
+        }
+
+
+        function ShowImagePreviews(imgUpLoaders) {
+            if (imgUpLoaders.files) {
+
+                var container = document.getElementById('imageContainer');
+                debugger
+
+                for (var i = 0; i < imgUpLoaders.files.length; i++) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        /* <br /> <span class=\"remove\">Remove image</span>*/
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = "imageThumb m-1";
+                        container.appendChild(img);
+                        debugger
+                    }
+
+                    reader.readAsDataURL(imgUpLoaders.files[i]);
+                    dts.items.add(imgUpLoaders.files[i]);
+                    debugger
+                }
+
+                imgUpLoaders.files = dts.files
+                debugger;
+            }
+        }
+
+        function removeFileFromFileList() {
+            document.getElementById('imgUpLoaders').value = "";
+        }
+
+        function removeFileFromFileList(index) {
+            const dt = new DataTransfer()
+            const input = document.getElementById('files')
+            const { files } = input
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i]
+                if (index !== i)
+                    dt.items.add(file) // here you exclude the file. thus removing it.
+            }
+
+            input.files = dt.files // A
+        }
+
+    </script>
+
+}

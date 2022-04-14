@@ -1,0 +1,71 @@
+﻿@model OptionImageDatas
+
+@{
+    ViewData["ActivePageProductManager"] = "Product";
+    ViewData["ActivePageTop"] = "ProductManager";
+    var statusmessage = TempData["StatusMessage"] as string;
+
+}
+
+<a asp-action="index" class="link-dark">Quản lý sản phẩm </a>/
+<a class="text-secondary">Thêm ảnh sản phẩm </a>/
+<a class="text-secondary">@Model.Name</a>
+<hr />
+
+<div class="row">
+    <div class="col-md-2 d-flex bd-highlight">
+        <button type="submit" form="Options" class="btn btn-secondary">+ Thêm ảnh</button>
+    </div>
+    <div class="col-md-10">
+        <form class="d-flex flex-row-reverse" method="post" asp-action="FilterImageOptions">
+            <div class="pe-2 bd-highlight">
+                @Html.HiddenFor(x => x.ProductId)
+                @Html.HiddenFor(x => x.Name)
+                <input class="form-control" asp-for="@Model.SearchName" placeholder="VD: Iphone 6" />
+                <span asp-validation-for="@Model.SearchName"></span>
+            </div>
+            <div class="pe-2 bd-highlight"><button class="btn btn-secondary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button></div>
+            <div asp-validation-summary="ModelOnly"></div>
+        </form>
+    </div>
+</div>
+<hr />
+<div class="">
+    @if (Model.ImageDatas == null || Model.ImageDatas.Length <= 0)
+    {
+        <div class="alert alert-danger">Không có dữ liệu !!!</div>
+    }
+    else
+    {
+        <form method="post" asp-action="CreateImageOptions" id="Options">
+            <div class="row">
+                @Html.HiddenFor(i => i.ProductId)
+                @for (int i = 0; i < Model.ImageDatas.Length; i++)
+                {
+                    <div class="col-md-4 pb-4">
+                        <div class="card pt-2" style="width:250px;">
+                            <img src="~/FileImg/ProductImg/@Model.ImageDatas[i].UrlImg" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <p class="card-text ">@Model.ImageDatas[i].Name / @EnumValue.GetValueColor(Model.ImageDatas[i].Color)</p>
+                                <input class="form-check-input" type="checkbox" asp-for="@Model.ImageDatas[i].Option" />
+                                <label asp-for="@Model.ImageDatas[i].Option">Thêm</label>
+                            </div>
+                            @Html.HiddenFor(x => x.ImageDatas[i].Option)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Id)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Name)
+                            @Html.HiddenFor(x => x.ImageDatas[i].Color)
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </form>
+    }
+</div>
+
+
+@section Scripts{
+
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+}

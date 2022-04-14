@@ -1,0 +1,7 @@
+﻿<div class="pb-2">
+    <div class="list-group">
+        <a asp-area="productManager" asp-controller="commodity" asp-action="index" class="list-group-item list-group-item-action border-0 rounded-0  @ManagerProductNavPages.CommodityNavClass(ViewContext)">Mặt hàng</a>
+        <a asp-area="productManager" asp-controller="DataImage" asp-action="index" class="list-group-item list-group-item-action border-0 rounded-0 @ManagerProductNavPages.DataImageNavClass(ViewContext)">Ảnh</a>
+        <a asp-area="productManager" asp-controller="product" asp-action="index" class="list-group-item list-group-item-action border-0 rounded-0 @ManagerProductNavPages.ProductNavClass(ViewContext)">Sản phẩm</a>
+    </div>
+</div>
